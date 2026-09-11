@@ -1,4 +1,6 @@
 import React from "react";
+import { MapPin } from "lucide-react";
+import { InstagramIcon, FacebookIcon, WhatsAppIcon } from "../../../shared/components/SocialIcons";
 
 export function VisitContactSection() {
     return (
@@ -18,7 +20,7 @@ export function VisitContactSection() {
 
                     <div className="location-box">
                         <div className="location-icon">
-                            📍
+                            <MapPin size={26} color="var(--gold)" />
                         </div>
                         <h2>
                             Krishna Jewellers
@@ -33,8 +35,9 @@ export function VisitContactSection() {
                             target="_blank"
                             rel="noreferrer"
                             className="map-btn"
+                            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
                         >
-                            📍 Open Google Maps
+                            <MapPin size={16} /> Open Google Maps
                         </a>
                     </div>
                 </div>
@@ -56,8 +59,9 @@ export function VisitContactSection() {
                         target="_blank"
                         rel="noreferrer"
                         className="contact-btn"
+                        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
                     >
-                        🟢 Contact on WhatsApp
+                        <WhatsAppIcon size={18} /> Contact on WhatsApp
                     </a>
 
                     <div className="social-links">
@@ -70,20 +74,7 @@ export function VisitContactSection() {
                                 className="social-btn"
                                 aria-label="Instagram"
                             >
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    width="20"
-                                    height="20"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.8"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                >
-                                    <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <circle cx="17.5" cy="6.5" r="1"></circle>
-                                </svg>
+                                <InstagramIcon size={20} />
                             </a>
                             <span className="social-name">
                                 Instagram
@@ -99,14 +90,7 @@ export function VisitContactSection() {
                                 className="social-btn"
                                 aria-label="Facebook"
                             >
-                                <svg
-                                    viewBox="0 0 24 24"
-                                    width="20"
-                                    height="20"
-                                    fill="currentColor"
-                                >
-                                    <path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"></path>
-                                </svg>
+                                <FacebookIcon size={20} />
                             </a>
                             <span className="social-name">
                                 Facebook

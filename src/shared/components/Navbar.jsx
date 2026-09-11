@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Menu, X, ShieldCheck } from "lucide-react";
+import { InstagramIcon, FacebookIcon } from "./SocialIcons";
 
 export function Navbar({ onResetHome }) {
     const [menuActive, setMenuActive] = useState(false);
@@ -35,8 +37,12 @@ export function Navbar({ onResetHome }) {
                     </div>
                 </a>
 
-                <button className="menu-btn" onClick={toggleMenu} aria-label="Toggle Navigation">
-                    ☰
+                <button 
+                    className="menu-btn" 
+                    onClick={toggleMenu} 
+                    aria-label="Toggle Navigation"
+                >
+                    {menuActive ? <X size={24} /> : <Menu size={24} />}
                 </button>
 
                 <nav id="mainNav" className={menuActive ? "active" : ""}>
@@ -46,20 +52,7 @@ export function Navbar({ onResetHome }) {
                         rel="noopener noreferrer"
                         aria-label="Instagram"
                     >
-                        <svg
-                            viewBox="0 0 24 24"
-                            width="20"
-                            height="20"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <circle cx="17.5" cy="6.5" r="1"></circle>
-                        </svg>
+                        <InstagramIcon size={18} />
                     </a>
 
                     <a
@@ -68,14 +61,7 @@ export function Navbar({ onResetHome }) {
                         rel="noopener noreferrer"
                         aria-label="Facebook"
                     >
-                        <svg
-                            viewBox="0 0 24 24"
-                            width="20"
-                            height="20"
-                            fill="currentColor"
-                        >
-                            <path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1z"></path>
-                        </svg>
+                        <FacebookIcon size={18} />
                     </a>
 
                     <a href="#collection" onClick={handleNavClick}>
@@ -94,7 +80,21 @@ export function Navbar({ onResetHome }) {
                         Contact
                     </a>
 
-                    <Link to="/admin" onClick={handleNavClick} style={{ color: "var(--gold)", fontSize: "12px", border: "1px solid rgba(212,175,55,0.4)", padding: "4px 8px", borderRadius: "4px" }}>
+                    <Link 
+                        to="/admin" 
+                        onClick={handleNavClick} 
+                        style={{ 
+                            color: "var(--gold)", 
+                            fontSize: "12px", 
+                            border: "1px solid rgba(212,175,55,0.4)", 
+                            padding: "5px 10px", 
+                            borderRadius: "6px",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "5px"
+                        }}
+                    >
+                        <ShieldCheck size={14} />
                         Admin
                     </Link>
                 </nav>

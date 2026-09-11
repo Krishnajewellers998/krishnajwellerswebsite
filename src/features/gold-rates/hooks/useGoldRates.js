@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { fetchGoldRates } from "../services/goldRatesService";
 
 export function useGoldRates(pollIntervalMs = 60000) {
-    const [rates, setRates] = useState({ "24K": 158000, "22K": 145305, "18K": 118886 });
+    const [rates, setRates] = useState(null);
     const [updatedAt, setUpdatedAt] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

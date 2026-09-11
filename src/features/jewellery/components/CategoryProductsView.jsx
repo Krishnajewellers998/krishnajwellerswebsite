@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { ArrowLeft, Scale, Sparkles, MessageCircle, ChevronLeft, ChevronRight, X, ArrowRight } from "lucide-react";
 import { useJewellery } from "../hooks/useJewellery";
 import { API_BASE_URL } from "../../../shared/services/apiClient";
 
@@ -78,8 +79,12 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
         <div className="products-view-root">
             {/* ── Page Header ── */}
             <section className="products-page-header">
-                <button className="products-back-btn" onClick={onBack}>
-                    ← Back to Collections
+                <button 
+                    className="products-back-btn" 
+                    onClick={onBack}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                >
+                    <ArrowLeft size={16} /> Back to Collections
                 </button>
                 <div className="products-header-text">
                     <span className="products-page-label">Our Collection</span>
@@ -102,10 +107,18 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                     </div>
                 ) : filteredProducts.length === 0 ? (
                     <div className="products-empty-state">
-                        <div className="empty-icon">💍</div>
+                        <div className="empty-icon">
+                            <Sparkles size={40} color="var(--gold)" />
+                        </div>
                         <h3>No designs found</h3>
                         <p>No jewellery matching your criteria. Try a different category.</p>
-                        <button className="products-back-btn" onClick={onBack}>View All Categories</button>
+                        <button 
+                            className="products-back-btn" 
+                            onClick={onBack}
+                            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                        >
+                            <ArrowLeft size={16} /> View All Categories
+                        </button>
                     </div>
                 ) : (
                     <>
@@ -129,7 +142,7 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                                 />
                                             ) : (
                                                 <div className="product-card-no-photo">
-                                                    <span>💍</span>
+                                                    <Sparkles size={28} color="var(--gold)" />
                                                     <p>No Photo</p>
                                                 </div>
                                             )}
@@ -140,7 +153,9 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                         <div className="product-card-info">
                                             <h3 className="product-card-name">{item.name || "Jewellery"}</h3>
                                             {item.weight && (
-                                                <span className="product-card-weight">⚖ {item.weight}g</span>
+                                                <span className="product-card-weight" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                                                    <Scale size={13} /> {item.weight}g
+                                                </span>
                                             )}
                                             {item.purity && (
                                                 <span className="product-card-purity">{item.purity}</span>
@@ -148,7 +163,9 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                             {item.description && (
                                                 <p className="product-card-desc">{item.description}</p>
                                             )}
-                                            <button className="product-card-enquire">Enquire Now →</button>
+                                            <button className="product-card-enquire" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+                                                Enquire Now <ArrowRight size={14} />
+                                            </button>
                                         </div>
                                     </div>
                                 );
@@ -174,7 +191,14 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
             {modalItem && (
                 <div className="product-modal" id="imageModal" onClick={closeModal}>
                     <div className="product-modal-content" onClick={e => e.stopPropagation()}>
-                        <button className="modal-close-btn" onClick={closeModal}>✕</button>
+                        <button 
+                            className="modal-close-btn" 
+                            onClick={closeModal}
+                            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+                            aria-label="Close Modal"
+                        >
+                            <X size={20} />
+                        </button>
 
                         <div className="modal-layout">
                             {/* Left: Image Gallery */}
@@ -184,7 +208,11 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                         <button
                                             className="modal-nav-btn modal-prev"
                                             onClick={() => setActivePhotoIndex(prev => prev > 0 ? prev - 1 : modalImages.length - 1)}
-                                        >‹</button>
+                                            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+                                            aria-label="Previous Photo"
+                                        >
+                                            <ChevronLeft size={20} />
+                                        </button>
                                     )}
                                     <img
                                         id="modalImage"
@@ -196,7 +224,11 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                         <button
                                             className="modal-nav-btn modal-next"
                                             onClick={() => setActivePhotoIndex(prev => prev < modalImages.length - 1 ? prev + 1 : 0)}
-                                        >›</button>
+                                            style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+                                            aria-label="Next Photo"
+                                        >
+                                            <ChevronRight size={20} />
+                                        </button>
                                     )}
                                     {modalImages.length > 1 && (
                                         <div className="modal-photo-counter" id="photoCounter">
@@ -250,8 +282,9 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                     target="_blank"
                                     rel="noreferrer"
                                     className="modal-whatsapp-btn"
+                                    style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
                                 >
-                                    <span>🟢</span> Enquire on WhatsApp
+                                    <MessageCircle size={18} /> Enquire on WhatsApp
                                 </a>
 
                                 <p className="modal-note">Price available on request. Contact us for today's rate.</p>

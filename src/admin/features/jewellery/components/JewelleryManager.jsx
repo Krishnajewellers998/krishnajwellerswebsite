@@ -112,14 +112,22 @@ export function JewelleryManager() {
         }
     };
 
-    const handleDelete = async (item) => {
-        if (!window.confirm(`Are you sure you want to delete "${item.name}"?`)) return;
+    // Delete Confirmation Modal State
+    const [itemToDelete, setItemToDelete] = useState(null);
+    const [deleting, setDeleting] = useState(false);
+
+    const confirmDelete = async () => {
+        if (!itemToDelete) return;
+        setDeleting(true);
         try {
-            await deleteJewellery(item.id);
-            setStatus({ type: "success", message: `Deleted "${item.name}".` });
+            await deleteJewellery(itemToDelete.id);
+            setStatus({ type: "success", message: `Deleted "${itemToDelete.name}".` });
+            setItemToDelete(null);
             loadData();
         } catch (err) {
-            setStatus({ type: "error", message: err.message });
+            setStatus({ type: "error", message: err.message || "Failed to delete item" });
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -207,7 +215,7 @@ export function JewelleryManager() {
                                                 <button className="action-btn edit-btn" onClick={() => openEditModal(item)} title="Edit">
                                                     <Edit2 size={14} />
                                                 </button>
-                                                <button className="action-btn delete-btn" onClick={() => handleDelete(item)} title="Delete">
+                                                <button className="action-btn delete-btn" onClick={() => setItemToDelete(item)} title="Delete">
                                                     <Trash2 size={14} />
                                                 </button>
                                             </div>
@@ -324,6 +332,42 @@ export function JewelleryManager() {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {itemToDelete && (
+                <div className="admin-modal-backdrop" onClick={() => !deleting && setItemToDelete(null)}>
+                    <div className="admin-modal-box" style={{ maxWidth: "420px" }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 style={{ color: "#EF4444", display: "flex", alignItems: "center", gap: "8px" }}>
+                                <Trash2 size={20} /> Delete Jewellery Item
+                            </h3>
+                            <button className="modal-close" onClick={() => !deleting && setItemToDelete(null)}>×</button>
+                        </div>
+                        <p style={{ color: "var(--admin-text-muted)", fontSize: "14px", lineHeight: "1.6", margin: "10px 0 24px" }}>
+                            Are you sure you want to permanently delete <strong style={{ color: "#FFF" }}>"{itemToDelete.name}"</strong>? This will remove it from both the website and mobile app.
+                        </p>
+                        <div className="modal-actions-row">
+                            <button 
+                                type="button" 
+                                className="admin-secondary-btn" 
+                                onClick={() => setItemToDelete(null)}
+                                disabled={deleting}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="button" 
+                                className="admin-primary-btn" 
+                                style={{ background: "linear-gradient(135deg, #EF4444, #B91C1C)" }}
+                                onClick={confirmDelete}
+                                disabled={deleting}
+                            >
+                                {deleting ? "Deleting..." : "Confirm Delete"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

@@ -23,9 +23,13 @@ export function getImageUrl(imagePath) {
 
 export async function adminRequest(endpoint, options = {}) {
     const url = endpoint.startsWith("http") ? endpoint : `${API_BASE_URL}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
+    const token = getAdminToken();
     
     const headers = {
-        "x-admin-token": getAdminToken(),
+        ...(token ? { 
+            "x-admin-token": token,
+            "Authorization": `Bearer ${token}`
+        } : {}),
         ...(options.headers || {})
     };
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Search } from "lucide-react";
 
 export function SearchSection({ onSearch }) {
     const [searchTerm, setSearchTerm] = useState("");
@@ -29,8 +30,12 @@ export function SearchSection({ onSearch }) {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
-                <button type="button" onClick={handleSearch}>
-                    🔍 Search
+                <button 
+                    type="button" 
+                    onClick={handleSearch}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                >
+                    <Search size={16} /> Search
                 </button>
             </div>
         </section>

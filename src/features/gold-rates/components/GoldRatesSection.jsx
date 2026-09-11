@@ -20,27 +20,27 @@ export function GoldRatesSection() {
                 <div className="rate-card">
                     <h3>24K GOLD</h3>
                     <div className="rate-price" id="rate24Display">
-                        {loading && !rates["24K"] ? "Loading..." : formatPrice(rates["24K"])}
+                        {rates && rates["24K"] ? formatPrice(rates["24K"]) : "Loading..."}
                     </div>
                 </div>
 
                 <div className="rate-card">
                     <h3>22K GOLD</h3>
                     <div className="rate-price" id="rate22Display">
-                        {loading && !rates["22K"] ? "Loading..." : formatPrice(rates["22K"])}
+                        {rates && rates["22K"] ? formatPrice(rates["22K"]) : "Loading..."}
                     </div>
                 </div>
 
                 <div className="rate-card">
                     <h3>18K GOLD</h3>
                     <div className="rate-price" id="rate18Display">
-                        {loading && !rates["18K"] ? "Loading..." : formatPrice(rates["18K"])}
+                        {rates && rates["18K"] ? formatPrice(rates["18K"]) : "Loading..."}
                     </div>
                 </div>
             </div>
 
             <div className="updated">
-                ● Updated just now
+                ● {rates ? "Live Stream Updated" : "Connecting to Live Feed..."}
             </div>
 
             <div className="gold-banner">

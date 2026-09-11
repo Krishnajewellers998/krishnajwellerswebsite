@@ -62,6 +62,9 @@ export function CategoryManager({ onCategoriesChanged }) {
         }
     };
 
+    const [catToDelete, setCatToDelete] = useState(null);
+    const [deleting, setDeleting] = useState(false);
+
     const handleSave = async (e) => {
         e.preventDefault();
         try {
@@ -79,14 +82,18 @@ export function CategoryManager({ onCategoriesChanged }) {
         }
     };
 
-    const handleDelete = async (catName) => {
-        if (!window.confirm(`Are you sure you want to delete category "${catName}"?`)) return;
+    const confirmDelete = async () => {
+        if (!catToDelete) return;
+        setDeleting(true);
         try {
-            await deleteCategory(catName);
-            setStatus({ type: "success", message: `Category "${catName}" deleted.` });
+            await deleteCategory(catToDelete.name);
+            setStatus({ type: "success", message: `Category "${catToDelete.name}" deleted.` });
+            setCatToDelete(null);
             loadData();
         } catch (err) {
-            setStatus({ type: "error", message: err.message });
+            setStatus({ type: "error", message: err.message || "Failed to delete category" });
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -130,7 +137,7 @@ export function CategoryManager({ onCategoriesChanged }) {
                                     <button className="action-btn edit-btn" onClick={() => openEditModal(cat)}>
                                         <Edit2 size={14} /> Edit
                                     </button>
-                                    <button className="action-btn delete-btn" onClick={() => handleDelete(cat.name)}>
+                                    <button className="action-btn delete-btn" onClick={() => setCatToDelete(cat)}>
                                         <Trash2 size={14} /> Delete
                                     </button>
                                 </div>
@@ -188,6 +195,42 @@ export function CategoryManager({ onCategoriesChanged }) {
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* Category Delete Confirmation Modal */}
+            {catToDelete && (
+                <div className="admin-modal-backdrop" onClick={() => !deleting && setCatToDelete(null)}>
+                    <div className="admin-modal-box" style={{ maxWidth: "420px" }} onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h3 style={{ color: "#EF4444", display: "flex", alignItems: "center", gap: "8px" }}>
+                                <Trash2 size={20} /> Delete Category
+                            </h3>
+                            <button className="modal-close" onClick={() => !deleting && setCatToDelete(null)}>×</button>
+                        </div>
+                        <p style={{ color: "var(--admin-text-muted)", fontSize: "14px", lineHeight: "1.6", margin: "10px 0 24px" }}>
+                            Are you sure you want to delete category <strong style={{ color: "#FFF" }}>"{catToDelete.name}"</strong>? This will remove it from the store catalog.
+                        </p>
+                        <div className="modal-actions-row">
+                            <button 
+                                type="button" 
+                                className="admin-secondary-btn" 
+                                onClick={() => setCatToDelete(null)}
+                                disabled={deleting}
+                            >
+                                Cancel
+                            </button>
+                            <button 
+                                type="button" 
+                                className="admin-primary-btn" 
+                                style={{ background: "linear-gradient(135deg, #EF4444, #B91C1C)" }}
+                                onClick={confirmDelete}
+                                disabled={deleting}
+                            >
+                                {deleting ? "Deleting..." : "Confirm Delete"}
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

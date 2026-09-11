@@ -40,14 +40,14 @@ export function DashboardStats({ onNavigate }) {
 
     return (
         <div className="dashboard-stats-grid">
-            <div className="stat-card" onClick={() => onNavigate("gold-rates")}>
+            <div className="stat-card" style={{ cursor: "default" }}>
                 <div className="stat-icon-box gold">
                     <TrendingUp size={24} />
                 </div>
                 <div className="stat-details">
-                    <span className="stat-label">22K Gold Rate (Live)</span>
+                    <span className="stat-label">22K Gold Rate (Live Feed)</span>
                     <span className="stat-value">{formatRate(stats.rate22K)}</span>
-                    <span className="stat-hint">Click to edit live rates →</span>
+                    <span className="stat-hint" style={{ color: "#10B981" }}>● Live Auto-Sync Active</span>
                 </div>
             </div>
 
