@@ -1,0 +1,135 @@
+/* =====================================================
+   RESET
+===================================================== */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    width: 100%;
+    overflow-x: clip;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #fff;
+    color: #222;
+    overflow-x: clip;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+}
+
+
+/* =====================================================
+   CSS VARIABLES
+===================================================== */
+
+:root {
+    --gold: #d4af37;
+    --gold-dark: #a67c00;
+    --gold-light: #f6e7a8;
+
+    --black: #0b0b0b;
+    --cream: #fffaf0;
+
+    --text: #222;
+    --muted: #777;
+}
+
+
+/* =====================================================
+   KEYFRAME ANIMATIONS
+===================================================== */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(24px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+
+/* =====================================================
+   COMMON SECTION UTILITIES
+===================================================== */
+
+.section {
+    width: 100%;
+    padding: 85px 20px;
+}
+
+.section-heading {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 45px;
+    text-align: center;
+}
+
+.section-label {
+    color: var(--gold-dark);
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.section-heading h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(30px, 5vw, 43px);
+    color: #222;
+    margin-bottom: 12px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+    .section {
+        padding: 55px 14px;
+    }
+
+    .section-heading h2 {
+        font-size: 30px;
+    }
+}

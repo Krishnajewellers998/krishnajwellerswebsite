@@ -1,5 +1,6 @@
 import React from "react";
 import { useGoldRates } from "../hooks/useGoldRates";
+import { API_BASE_URL } from "../../../shared/services/apiClient";
 
 export function GoldRatesSection() {
     const { rates, loading } = useGoldRates();
@@ -46,7 +47,7 @@ export function GoldRatesSection() {
                 <img 
                     src="/images/banner.jpg" 
                     alt="Krishna Jewellers Offer" 
-                    onError={(e) => { e.target.src = "http://localhost:3000/images/banner.jpg"; }}
+                    onError={(e) => { e.target.src = `${API_BASE_URL}/images/banner.jpg`; }}
                 />
             </div>
         </section>

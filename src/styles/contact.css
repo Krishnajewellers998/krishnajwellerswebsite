@@ -1,0 +1,299 @@
+/* =====================================================
+   VISIT + CONTACT COMBINED SECTION
+===================================================== */
+
+.visit-contact {
+    width: 100%;
+    background: linear-gradient(180deg, #fffaf0, #fff);
+    padding: 48px 20px;
+}
+
+.visit-contact-inner {
+    width: 100%;
+    max-width: 1050px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #fff;
+    border: 1px solid #ead9a3;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
+/* Location Side */
+.location-side {
+    padding: 32px 30px;
+    text-align: center;
+    background: linear-gradient(145deg, #fffdf7, #fff8e7);
+}
+
+.location-side .section-label,
+.contact-side .section-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-bottom: 7px;
+}
+
+.location-side h2,
+.contact-side h2 {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    margin-bottom: 9px;
+}
+
+.location-side h2 {
+    color: #9b7200;
+}
+
+.location-side > p {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.location-box {
+    width: 100%;
+    max-width: 380px;
+    margin: auto;
+    padding: 18px 15px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 12px;
+    border: 1px solid #ead9a3;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+}
+
+.location-icon {
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+
+.location-box h2 {
+    font-size: 17px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.location-box p {
+    color: #666;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.map-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 7px;
+    background: #111;
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.map-btn:hover {
+    transform: translateY(-2px);
+    background: #222;
+}
+
+/* Contact Side */
+.contact-side {
+    padding: 32px 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #ead9a3;
+    background: #fff;
+}
+
+.contact-side .section-label {
+    color: var(--gold-dark);
+}
+
+.contact-side h2 {
+    color: #222;
+}
+
+.contact-side p {
+    max-width: 390px;
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 22px;
+    border-radius: 25px;
+    background: #25D366;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(37,211,102,0.20);
+    transition: 0.3s;
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37,211,102,0.30);
+}
+
+
+/* =====================================================
+   SOCIAL LINKS
+===================================================== */
+
+.social-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 12px;
+}
+
+.social-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.social-btn {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d4af37;
+    border-radius: 50%;
+    background: #fff;
+    color: #a67c00;
+    transition: 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.social-btn:hover {
+    background: #111;
+    color: #d4af37;
+    transform: translateY(-2px);
+}
+
+.social-btn svg {
+    width: 17px;
+    height: 17px;
+}
+
+.social-name {
+    color: #777;
+    font-size: 9px;
+    line-height: 1;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    width: 100%;
+    background: linear-gradient(135deg, #080808, #17140d, #080808);
+    color: #777;
+    text-align: center;
+    padding: 22px 15px;
+    font-size: 12px;
+}
+
+.footer-brand {
+    color: var(--gold);
+    font-family: Georgia, serif;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+
+/* =====================================================
+   CONTACT + FOOTER MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+    .visit-contact {
+        padding: 28px 12px;
+    }
+
+    .visit-contact-inner {
+        display: grid;
+        grid-template-columns: 1fr;
+        border-radius: 14px;
+    }
+
+    .location-side {
+        padding: 25px 15px 22px;
+    }
+
+    .location-side h2,
+    .contact-side h2 {
+        font-size: 23px;
+    }
+
+    .location-side > p {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .location-box {
+        padding: 14px 10px;
+    }
+
+    .location-icon {
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .location-box h2 {
+        font-size: 16px;
+    }
+
+    .location-box p {
+        font-size: 11px;
+        margin-bottom: 10px;
+    }
+
+    .map-btn {
+        width: auto;
+        padding: 9px 15px;
+        font-size: 11px;
+    }
+
+    .contact-side {
+        padding: 24px 15px 28px;
+        border-left: none;
+        border-top: 1px solid #ead9a3;
+    }
+
+    .contact-side p {
+        font-size: 12px;
+        line-height: 1.55;
+        margin-bottom: 12px;
+        max-width: 320px;
+    }
+
+    .contact-btn {
+        width: auto;
+        padding: 10px 20px;
+        font-size: 11px;
+    }
+
+    footer {
+        padding: 20px 12px;
+        font-size: 11px;
+    }
+}

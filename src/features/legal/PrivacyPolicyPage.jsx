@@ -157,6 +157,10 @@ export function PrivacyPolicyPage() {
                                 <span className="pp-contact-value">+91 99841 23388</span>
                             </div>
                             <div className="pp-contact-row">
+                                <span className="pp-contact-label">Email</span>
+                                <span className="pp-contact-value">krishna9984123388@gmail.com</span>
+                            </div>
+                            <div className="pp-contact-row">
                                 <span className="pp-contact-label">Address</span>
                                 <span className="pp-contact-value">Khushipura, Rath, Uttar Pradesh 210431</span>
                             </div>

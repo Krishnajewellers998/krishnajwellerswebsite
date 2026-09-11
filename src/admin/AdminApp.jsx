@@ -3,7 +3,6 @@ import { AuthProvider, useAuth } from "./features/auth/AuthContext";
 import { LoginForm } from "./features/auth/components/LoginForm";
 import { AdminLayout } from "./shared/components/AdminLayout";
 import { DashboardStats } from "./features/dashboard/components/DashboardStats";
-import { GoldRatesEditor } from "./features/gold-rates/components/GoldRatesEditor";
 import { CategoryManager } from "./features/categories/components/CategoryManager";
 import { JewelleryManager } from "./features/jewellery/components/JewelleryManager";
 import "./admin.css";
@@ -26,13 +25,7 @@ function AdminDashboard() {
 
     return (
         <AdminLayout activeTab={activeTab} setActiveTab={setActiveTab}>
-            {activeTab === "dashboard" && (
-                <>
-                    <DashboardStats onNavigate={setActiveTab} />
-                    <GoldRatesEditor />
-                </>
-            )}
-            {activeTab === "gold-rates" && <GoldRatesEditor />}
+            {activeTab === "dashboard" && <DashboardStats onNavigate={setActiveTab} />}
             {activeTab === "categories" && <CategoryManager />}
             {activeTab === "jewellery" && <JewelleryManager />}
         </AdminLayout>

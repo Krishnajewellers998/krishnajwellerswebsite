@@ -1,5 +1,5 @@
 import React from "react";
-import { LayoutDashboard, TrendingUp, Layers, Gem, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Layers, Gem, LogOut, ExternalLink } from "lucide-react";
 import { useAuth } from "../../features/auth/AuthContext";
 
 export function AdminLayout({ activeTab, setActiveTab, children }) {
@@ -7,7 +7,6 @@ export function AdminLayout({ activeTab, setActiveTab, children }) {
 
     const navItems = [
         { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} /> },
-        { id: "gold-rates", label: "Gold Rates", icon: <TrendingUp size={18} /> },
         { id: "categories", label: "Categories", icon: <Layers size={18} /> },
         { id: "jewellery", label: "Jewellery Catalog", icon: <Gem size={18} /> }
     ];

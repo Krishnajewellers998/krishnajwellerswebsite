@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from "react";
 import { useJewellery } from "../hooks/useJewellery";
+import { API_BASE_URL } from "../../../shared/services/apiClient";
 
 export function CategoryProductsView({ category, searchQuery, onBack, onSearch }) {
-    const { jewellery, loading } = useJewellery();
-    const [localSearch, setLocalSearch] = useState(searchQuery || "");
+    const { items: jewellery, loading } = useJewellery();
     const [visibleCount, setVisibleCount] = useState(20);
     const [modalItem, setModalItem] = useState(null);
     const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
-    // Filter products
+    // Filter products based on category or search
     const filteredProducts = useMemo(() => {
         let list = jewellery || [];
 
@@ -38,7 +38,7 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
         if (!img) return "";
         if (img.startsWith("http")) return img;
         const clean = img.startsWith("/") ? img.slice(1) : img;
-        return `http://localhost:3000/${clean}`;
+        return `${API_BASE_URL}/${clean}`;
     };
 
     const getItemImages = (item) => {
@@ -51,230 +51,211 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
         return imgs.map(img => {
             if (img.startsWith("http")) return img;
             const clean = img.startsWith("/") ? img.slice(1) : img;
-            return `http://localhost:3000/${clean}`;
+            return `${API_BASE_URL}/${clean}`;
         });
     };
 
     const openModal = (item) => {
         setModalItem(item);
         setActivePhotoIndex(0);
+        document.body.style.overflow = "hidden";
     };
 
     const closeModal = () => {
         setModalItem(null);
-    };
-
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        if (onSearch) {
-            onSearch(localSearch.trim());
-        }
+        document.body.style.overflow = "";
     };
 
     const modalImages = modalItem ? getItemImages(modalItem) : [];
 
     const pageTitle = searchQuery
-        ? `Search Results for "${searchQuery}"`
+        ? `Results for "${searchQuery}"`
         : `${category} Collection`;
 
+    const visibleProducts = filteredProducts.slice(0, visibleCount);
+
     return (
-        <div>
-            {/* Page Header */}
-            <section className="page-header">
-                <div className="page-label">
-                    Our Collection
+        <div className="products-view-root">
+            {/* ── Page Header ── */}
+            <section className="products-page-header">
+                <button className="products-back-btn" onClick={onBack}>
+                    ← Back to Collections
+                </button>
+                <div className="products-header-text">
+                    <span className="products-page-label">Our Collection</span>
+                    <h1 id="categoryTitle" className="products-page-title">{pageTitle}</h1>
+                    <p className="products-page-count">
+                        {loading
+                            ? "Loading designs..."
+                            : `${filteredProducts.length} design${filteredProducts.length !== 1 ? "s" : ""} available`}
+                    </p>
                 </div>
-                <h1 id="categoryTitle">
-                    {pageTitle}
-                </h1>
-                <p>
-                    Explore our beautiful designs
-                </p>
             </section>
 
-            {/* Products Section */}
-            <section className="products-section">
-                <div className="top-bar">
-                    <button className="back-button" onClick={onBack}>
-                        ← Back to Categories
-                    </button>
-
-                    <div className="product-count" id="productCount">
-                        {loading ? "Loading..." : `${filteredProducts.length} designs available`}
+            {/* ── Product Grid ── */}
+            <section className="products-grid-section">
+                {loading ? (
+                    <div className="products-loading-state">
+                        {[...Array(8)].map((_, i) => (
+                            <div key={i} className="product-skeleton" />
+                        ))}
                     </div>
-                </div>
-
-                <form className="category-search" onSubmit={handleSearchSubmit}>
-                    <input
-                        type="search"
-                        placeholder="Search jewellery..."
-                        autoComplete="off"
-                        value={localSearch}
-                        onChange={(e) => setLocalSearch(e.target.value)}
-                    />
-                    <button type="submit">
-                        🔍 Search
-                    </button>
-                </form>
-
-                <div className="products" id="productsContainer">
-                    {loading ? (
-                        <p style={{ textAlign: "center", gridColumn: "1 / -1", color: "#999", padding: "40px" }}>
-                            Loading jewellery items...
-                        </p>
-                    ) : filteredProducts.length === 0 ? (
-                        <div style={{ textAlign: "center", gridColumn: "1 / -1", padding: "60px 20px" }}>
-                            <p style={{ color: "#777", fontSize: "16px", marginBottom: "15px" }}>
-                                No designs available matching your criteria.
-                            </p>
-                            <button className="back-button" onClick={onBack}>
-                                View All Categories
-                            </button>
-                        </div>
-                    ) : (
-                        filteredProducts.slice(0, visibleCount).map((item, idx) => {
-                            const firstImg = getProductImage(item);
-                            return (
-                                <div key={item.id || idx} className="product">
-                                    {firstImg ? (
-                                        <img
-                                            src={firstImg}
-                                            alt={item.name || "Jewellery"}
-                                            className="product-image"
-                                            onClick={() => openModal(item)}
-                                            style={{ cursor: "pointer" }}
-                                            onError={(e) => { e.target.src = "/images/category-ring.jpg"; }}
-                                        />
-                                    ) : (
-                                        <div
-                                            className="product-image"
-                                            style={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                                color: "#999"
-                                            }}
-                                        >
-                                            No Photo
+                ) : filteredProducts.length === 0 ? (
+                    <div className="products-empty-state">
+                        <div className="empty-icon">💍</div>
+                        <h3>No designs found</h3>
+                        <p>No jewellery matching your criteria. Try a different category.</p>
+                        <button className="products-back-btn" onClick={onBack}>View All Categories</button>
+                    </div>
+                ) : (
+                    <>
+                        <div className="products-grid" id="productsContainer">
+                            {visibleProducts.map((item, idx) => {
+                                const firstImg = getProductImage(item);
+                                return (
+                                    <div
+                                        key={item.id || idx}
+                                        className="product-card"
+                                        onClick={() => openModal(item)}
+                                    >
+                                        <div className="product-card-image-wrap">
+                                            {firstImg ? (
+                                                <img
+                                                    src={firstImg}
+                                                    alt={item.name || "Jewellery"}
+                                                    className="product-card-image"
+                                                    loading="lazy"
+                                                    onError={(e) => { e.target.src = "/images/category-ring.jpg"; }}
+                                                />
+                                            ) : (
+                                                <div className="product-card-no-photo">
+                                                    <span>💍</span>
+                                                    <p>No Photo</p>
+                                                </div>
+                                            )}
+                                            <div className="product-card-overlay">
+                                                <span>View Details</span>
+                                            </div>
                                         </div>
-                                    )}
-
-                                    <div className="product-info">
-                                        <h3>{item.name || "Jewellery"}</h3>
-                                        {item.weight && (
-                                            <span className="weight">
-                                                ⚖ {item.weight} Gram
-                                            </span>
-                                        )}
-                                        {item.description && (
-                                            <p>{item.description}</p>
-                                        )}
+                                        <div className="product-card-info">
+                                            <h3 className="product-card-name">{item.name || "Jewellery"}</h3>
+                                            {item.weight && (
+                                                <span className="product-card-weight">⚖ {item.weight}g</span>
+                                            )}
+                                            {item.purity && (
+                                                <span className="product-card-purity">{item.purity}</span>
+                                            )}
+                                            {item.description && (
+                                                <p className="product-card-desc">{item.description}</p>
+                                            )}
+                                            <button className="product-card-enquire">Enquire Now →</button>
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        })
-                    )}
-                </div>
+                                );
+                            })}
+                        </div>
 
-                {filteredProducts.length > visibleCount && (
-                    <button
-                        id="loadMoreBtn"
-                        type="button"
-                        onClick={() => setVisibleCount(prev => prev + 20)}
-                        style={{
-                            display: "block",
-                            margin: "30px auto 0",
-                            padding: "12px 25px",
-                            border: "none",
-                            borderRadius: "8px",
-                            background: "#111",
-                            color: "#fff",
-                            fontSize: "13px",
-                            cursor: "pointer"
-                        }}
-                    >
-                        Load More
-                    </button>
+                        {filteredProducts.length > visibleCount && (
+                            <div className="load-more-wrap">
+                                <button
+                                    id="loadMoreBtn"
+                                    className="load-more-btn"
+                                    onClick={() => setVisibleCount(prev => prev + 20)}
+                                >
+                                    Load More Designs
+                                </button>
+                            </div>
+                        )}
+                    </>
                 )}
             </section>
 
-            {/* Modal */}
+            {/* ── Detail Modal ── */}
             {modalItem && (
-                <div className="modal" id="imageModal" style={{ display: "flex" }}>
-                    <div className="modal-content">
-                        <button className="close-modal" onClick={closeModal}>
-                            ×
-                        </button>
+                <div className="product-modal" id="imageModal" onClick={closeModal}>
+                    <div className="product-modal-content" onClick={e => e.stopPropagation()}>
+                        <button className="modal-close-btn" onClick={closeModal}>✕</button>
 
-                        {modalImages.length > 1 && (
-                            <button
-                                className="photo-nav photo-prev"
-                                onClick={() => setActivePhotoIndex(prev => (prev > 0 ? prev - 1 : modalImages.length - 1))}
-                            >
-                                ‹
-                            </button>
-                        )}
-
-                        <img
-                            id="modalImage"
-                            className="modal-image"
-                            src={modalImages[activePhotoIndex] || "/images/category-ring.jpg"}
-                            alt={modalItem.name || "Jewellery"}
-                        />
-
-                        {modalImages.length > 1 && (
-                            <button
-                                className="photo-nav photo-next"
-                                onClick={() => setActivePhotoIndex(prev => (prev < modalImages.length - 1 ? prev + 1 : 0))}
-                            >
-                                ›
-                            </button>
-                        )}
-
-                        {modalImages.length > 1 && (
-                            <div className="photo-counter" id="photoCounter">
-                                {activePhotoIndex + 1} / {modalImages.length}
-                            </div>
-                        )}
-
-                        {modalImages.length > 1 && (
-                            <div className="modal-gallery" id="modalGallery">
-                                {modalImages.map((img, i) => (
+                        <div className="modal-layout">
+                            {/* Left: Image Gallery */}
+                            <div className="modal-gallery-panel">
+                                <div className="modal-main-image-wrap">
+                                    {modalImages.length > 1 && (
+                                        <button
+                                            className="modal-nav-btn modal-prev"
+                                            onClick={() => setActivePhotoIndex(prev => prev > 0 ? prev - 1 : modalImages.length - 1)}
+                                        >‹</button>
+                                    )}
                                     <img
-                                        key={i}
-                                        src={img}
-                                        alt={`Thumbnail ${i + 1}`}
-                                        className={`gallery-thumb ${i === activePhotoIndex ? "active" : ""}`}
-                                        onClick={() => setActivePhotoIndex(i)}
-                                        style={{
-                                            width: "45px",
-                                            height: "45px",
-                                            objectFit: "cover",
-                                            margin: "0 4px",
-                                            border: i === activePhotoIndex ? "2px solid var(--gold)" : "1px solid #ddd",
-                                            borderRadius: "4px",
-                                            cursor: "pointer"
-                                        }}
+                                        id="modalImage"
+                                        className="modal-main-image"
+                                        src={modalImages[activePhotoIndex] || "/images/category-ring.jpg"}
+                                        alt={modalItem.name || "Jewellery"}
                                     />
-                                ))}
+                                    {modalImages.length > 1 && (
+                                        <button
+                                            className="modal-nav-btn modal-next"
+                                            onClick={() => setActivePhotoIndex(prev => prev < modalImages.length - 1 ? prev + 1 : 0)}
+                                        >›</button>
+                                    )}
+                                    {modalImages.length > 1 && (
+                                        <div className="modal-photo-counter" id="photoCounter">
+                                            {activePhotoIndex + 1} / {modalImages.length}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {modalImages.length > 1 && (
+                                    <div className="modal-thumbs" id="modalGallery">
+                                        {modalImages.map((img, i) => (
+                                            <img
+                                                key={i}
+                                                src={img}
+                                                alt={`View ${i + 1}`}
+                                                className={`modal-thumb ${i === activePhotoIndex ? "active" : ""}`}
+                                                onClick={() => setActivePhotoIndex(i)}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        )}
 
-                        <div className="modal-info">
-                            <h2 id="modalName">{modalItem.name || "Jewellery"}</h2>
-                            {modalItem.description && <p id="modalDescription">{modalItem.description}</p>}
-                            {modalItem.weight && <p id="modalWeight"><strong>Weight:</strong> {modalItem.weight} Gram</p>}
-                            {modalItem.purity && <p><strong>Purity:</strong> {modalItem.purity}</p>}
+                            {/* Right: Info */}
+                            <div className="modal-info-panel">
+                                <span className="modal-category-tag">{modalItem.category}</span>
+                                <h2 id="modalName" className="modal-item-name">{modalItem.name || "Jewellery"}</h2>
 
-                            <a
-                                id="modalWhatsapp"
-                                href={`https://wa.me/919984123388?text=${encodeURIComponent(`Hello Krishna Jewellers, I am interested in: ${modalItem.name || "Jewellery"} (Weight: ${modalItem.weight || "N/A"}g). Please share price and details.`)}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="whatsapp-btn"
-                            >
-                                🟢 Enquire on WhatsApp
-                            </a>
+                                <div className="modal-specs">
+                                    {modalItem.weight && (
+                                        <div className="modal-spec">
+                                            <span className="spec-label">Weight</span>
+                                            <span className="spec-value">{modalItem.weight} Gram</span>
+                                        </div>
+                                    )}
+                                    {modalItem.purity && (
+                                        <div className="modal-spec">
+                                            <span className="spec-label">Purity</span>
+                                            <span className="spec-value">{modalItem.purity}</span>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {modalItem.description && (
+                                    <p id="modalDescription" className="modal-item-desc">{modalItem.description}</p>
+                                )}
+
+                                <a
+                                    id="modalWhatsapp"
+                                    href={`https://wa.me/919984123388?text=${encodeURIComponent(`Hello Krishna Jewellers, I am interested in: ${modalItem.name || "Jewellery"} (Weight: ${modalItem.weight || "N/A"}g). Please share price and details.`)}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="modal-whatsapp-btn"
+                                >
+                                    <span>🟢</span> Enquire on WhatsApp
+                                </a>
+
+                                <p className="modal-note">Price available on request. Contact us for today's rate.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

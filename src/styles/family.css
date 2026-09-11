@@ -1,0 +1,169 @@
+/* =====================================================
+   FAMILY SECTION
+===================================================== */
+
+.family {
+    width: 100%;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(212,175,55,0.12), transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(212,175,55,0.10), transparent 25%),
+        linear-gradient(135deg, #080808, #17140d, #080808);
+    color: white;
+    overflow: hidden;
+    padding: 55px 20px 48px;
+}
+
+.family .section-heading {
+    margin-bottom: 28px;
+}
+
+.family .section-heading h2 {
+    color: white;
+    font-size: clamp(28px, 4vw, 39px);
+    margin-bottom: 9px;
+}
+
+.family .section-heading p {
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.family .section-label {
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-bottom: 7px;
+}
+
+.family-grid {
+    width: 100%;
+    max-width: 1050px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.family-card {
+    width: 100%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025));
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 14px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.family-photo {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    object-position: center;
+    background: #111;
+    display: block;
+}
+
+.family-info {
+    padding: 11px 7px 14px;
+}
+
+.family-info h3 {
+    color: var(--gold);
+    font-family: Georgia, serif;
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 5px;
+}
+
+.family-info span {
+    color: #aaa;
+    font-size: 9px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.family-quote {
+    width: 100%;
+    max-width: 780px;
+    margin: 27px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(212,175,55,0.25);
+    text-align: center;
+    color: #c9c9c9;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+
+/* =====================================================
+   FAMILY MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+    .family {
+        padding: 42px 12px 38px;
+    }
+
+    .family .section-heading {
+        margin-bottom: 20px;
+    }
+
+    .family .section-heading h2 {
+        font-size: 28px;
+    }
+
+    .family .section-heading p {
+        font-size: 12px;
+        max-width: 330px;
+        margin: auto;
+    }
+
+    .family-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding: 3px 3px 10px;
+    }
+
+    .family-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .family-card {
+        flex: 0 0 66%;
+        min-width: 66%;
+        scroll-snap-align: center;
+        border-radius: 12px;
+    }
+
+    .family-photo {
+        height: 210px;
+        object-fit: contain;
+        object-position: center;
+        background: #111;
+    }
+
+    .family-info {
+        padding: 9px 5px 11px;
+    }
+
+    .family-info h3 {
+        font-size: 13px;
+        line-height: 1.25;
+    }
+
+    .family-info span {
+        font-size: 8px;
+    }
+
+    .family-quote {
+        margin-top: 18px;
+        padding-top: 15px;
+        font-size: 12px;
+        line-height: 1.55;
+    }
+}

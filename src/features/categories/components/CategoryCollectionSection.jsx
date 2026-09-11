@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCategories } from "../hooks/useCategories";
+import { API_BASE_URL } from "../../../shared/services/apiClient";
 
 export function CategoryCollectionSection({ onSelectCategory }) {
     const { categories, loading } = useCategories();
@@ -12,7 +13,7 @@ export function CategoryCollectionSection({ onSelectCategory }) {
         if (!img) return "/images/category-ring.jpg";
         if (img.startsWith("http")) return img;
         const clean = img.startsWith("/") ? img.slice(1) : img;
-        return `http://localhost:3000/${clean}`;
+        return `${API_BASE_URL}/${clean}`;
     };
 
     return (

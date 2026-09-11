@@ -1,0 +1,91 @@
+/* =====================================================
+   SEARCH BAR — STICKY
+===================================================== */
+
+.search-section {
+    width: 100%;
+    padding: 12px 20px;
+    background: #fff;
+    position: sticky;
+    top: 78px;
+    z-index: 2500;
+    border-bottom: 1px solid #ead9a3;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    align-self: flex-start;
+}
+
+.search-box {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    padding: 7px;
+    border: 1px solid #ead9a3;
+    border-radius: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    padding: 12px 17px;
+    font-size: 16px;
+    color: #333;
+    background: transparent;
+}
+
+.search-box input::placeholder {
+    color: #999;
+}
+
+.search-box button {
+    border: none;
+    padding: 11px 20px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #d4af37, #a67c00);
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+.search-box button:hover {
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   SEARCH BAR MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+    .search-section {
+        padding: 8px 10px;
+        top: 64px;
+        background: #fff;
+        border-bottom: 1px solid #ead9a3;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    .search-box {
+        padding: 4px;
+        gap: 4px;
+        border-radius: 35px;
+    }
+
+    .search-box input {
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+
+    .search-box button {
+        padding: 9px 13px;
+        font-size: 11px;
+    }
+}
