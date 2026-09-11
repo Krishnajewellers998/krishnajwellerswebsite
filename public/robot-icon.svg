@@ -1,0 +1,117 @@
+<svg width="512" height="512" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Titanium head -->
+    <linearGradient id="dl-titanium" x1="20" y1="14" x2="60" y2="62" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F0EDE8"/>
+      <stop offset="100%" stop-color="#D4CFCA"/>
+    </linearGradient>
+    <!-- Orange faceplate -->
+    <linearGradient id="dl-orange" x1="24" y1="26" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF8C3A"/>
+      <stop offset="100%" stop-color="#E85800"/>
+    </linearGradient>
+    <!-- Dark metal -->
+    <linearGradient id="dl-dark" x1="0" y1="0" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#25262F"/>
+      <stop offset="100%" stop-color="#14151C"/>
+    </linearGradient>
+    <!-- Shoulder -->
+    <linearGradient id="dl-shoulder" x1="8" y1="70" x2="72" y2="78" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E8E4DF"/>
+      <stop offset="100%" stop-color="#C8C3BE"/>
+    </linearGradient>
+    <!-- Cyan eye -->
+    <radialGradient id="dl-cyan-eye" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#60F5FF"/>
+      <stop offset="100%" stop-color="#00B8D9"/>
+    </radialGradient>
+    <!-- Antenna orb -->
+    <radialGradient id="dl-orb" cx="40%" cy="35%" r="60%">
+      <stop offset="0%" stop-color="#CCFFFF"/>
+      <stop offset="50%" stop-color="#00E5FF"/>
+      <stop offset="100%" stop-color="#0084A0"/>
+    </radialGradient>
+    <!-- Eye glow -->
+    <filter id="dl-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="1.4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Orb glow -->
+    <filter id="dl-orb-glow" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- White background -->
+  <rect width="80" height="80" fill="#FFFFFF"/>
+
+  <!-- SHOULDERS -->
+  <rect x="6"  y="72" width="68" height="6"  rx="1.5" fill="url(#dl-shoulder)"/>
+  <rect x="6"  y="72" width="5"  height="6"  rx="1"   fill="url(#dl-orange)"/>
+  <rect x="69" y="72" width="5"  height="6"  rx="1"   fill="url(#dl-orange)"/>
+
+  <!-- COLLAR RING -->
+  <rect x="27" y="67" width="26" height="5" rx="2.5" fill="url(#dl-orange)"/>
+
+  <!-- NECK -->
+  <rect x="32" y="61" width="16" height="7" rx="2" fill="url(#dl-dark)"/>
+  <line x1="35" y1="64" x2="45" y2="64" stroke="#3A3C4A" stroke-width="0.9"/>
+  <line x1="35" y1="66" x2="45" y2="66" stroke="#3A3C4A" stroke-width="0.9"/>
+
+  <!-- EAR PANELS -->
+  <rect x="7"  y="25" width="8" height="24" rx="1.5" fill="url(#dl-dark)"/>
+  <rect x="9"  y="29" width="4" height="13" rx="1"   fill="url(#dl-orange)"/>
+  <rect x="65" y="25" width="8" height="24" rx="1.5" fill="url(#dl-dark)"/>
+  <rect x="67" y="29" width="4" height="13" rx="1"   fill="url(#dl-orange)"/>
+
+  <!-- MAIN HEAD (titanium cranium) -->
+  <rect x="14" y="13" width="52" height="49" rx="3" fill="url(#dl-titanium)" stroke="#C5C0BA" stroke-width="0.6"/>
+
+  <!-- ORANGE TOP CAP / BROW RIDGE -->
+  <rect x="14" y="10" width="52" height="8" rx="2" fill="url(#dl-orange)"/>
+
+  <!-- ORANGE FACEPLATE -->
+  <rect x="17" y="22" width="46" height="37" rx="2" fill="url(#dl-orange)"/>
+
+  <!-- BROW RIDGES -->
+  <rect x="21" y="28" width="11" height="3" rx="0.8" fill="url(#dl-dark)"/>
+  <rect x="48" y="28" width="11" height="3" rx="0.8" fill="url(#dl-dark)"/>
+
+  <!-- VISOR BAND -->
+  <rect x="19" y="30" width="42" height="14" rx="1.5" fill="url(#dl-dark)"/>
+  <rect x="20" y="31" width="40" height="12" rx="1"   fill="#060810"/>
+
+  <!-- LEFT EYE -->
+  <rect x="22" y="33" width="14" height="7" rx="1.2" fill="#005577" filter="url(#dl-glow)"/>
+  <rect x="23" y="34" width="12" height="5" rx="1"   fill="url(#dl-cyan-eye)" filter="url(#dl-glow)"/>
+  <rect x="28" y="35.5" width="3" height="2" rx="0.4" fill="#FFFFFF"/>
+
+  <!-- RIGHT EYE -->
+  <rect x="44" y="33" width="14" height="7" rx="1.2" fill="#005577" filter="url(#dl-glow)"/>
+  <rect x="45" y="34" width="12" height="5" rx="1"   fill="url(#dl-cyan-eye)" filter="url(#dl-glow)"/>
+  <rect x="49" y="35.5" width="3" height="2" rx="0.4" fill="#FFFFFF"/>
+
+  <!-- MOUTH GRILLE -->
+  <rect x="22" y="48" width="36" height="8" rx="1.2" fill="url(#dl-dark)"/>
+  <rect x="25" y="50" width="3.5" height="4" rx="0.5" fill="#00E5FF" opacity="0.88"/>
+  <rect x="31" y="50" width="3.5" height="4" rx="0.5" fill="#00E5FF" opacity="0.88"/>
+  <rect x="37" y="50" width="3.5" height="4" rx="0.5" fill="#00E5FF" opacity="0.88"/>
+  <rect x="43" y="50" width="3.5" height="4" rx="0.5" fill="#00E5FF" opacity="0.88"/>
+  <rect x="49" y="50" width="3.5" height="4" rx="0.5" fill="#00E5FF" opacity="0.88"/>
+
+  <!-- JAW / CHIN -->
+  <rect x="17" y="56" width="46" height="6" rx="1.5" fill="url(#dl-dark)"/>
+  <!-- Chin stripe -->
+  <rect x="20" y="58" width="40" height="2.5" rx="1" fill="#FF7120"/>
+
+  <!-- ANTENNA STEM -->
+  <rect x="39" y="2.5" width="2.5" height="8.5" rx="1.25" fill="url(#dl-dark)"/>
+  <!-- Base collar -->
+  <rect x="36" y="9" width="8" height="2.5" rx="1" fill="url(#dl-dark)"/>
+
+  <!-- ANTENNA ORB -->
+  <circle cx="40.2" cy="2.5" r="3.6" fill="url(#dl-orb)" filter="url(#dl-orb-glow)"/>
+  <!-- Orb highlight -->
+  <circle cx="39" cy="1.5" r="1.1" fill="#EAFFFF" opacity="0.75"/>
+</svg>
