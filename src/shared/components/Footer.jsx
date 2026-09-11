@@ -24,6 +24,15 @@ export function Footer() {
                     ⚙ Store Admin Portal
                 </Link>
             </div>
+
+            <div style={{ marginTop: "10px" }}>
+                <Link 
+                    to="/privacy-policy"
+                    style={{ color: "rgba(212,175,55,0.6)", fontSize: "11px", textDecoration: "none" }}
+                >
+                    Privacy Policy
+                </Link>
+            </div>
         </footer>
     );
 }

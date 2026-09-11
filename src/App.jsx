@@ -9,6 +9,7 @@ import { FamilySection } from "./features/home/components/FamilySection";
 import { VisitContactSection } from "./features/home/components/VisitContactSection";
 import { Footer } from "./shared/components/Footer";
 import { AdminApp } from "./admin/AdminApp";
+import { PrivacyPolicyPage } from "./features/legal/PrivacyPolicyPage";
 
 function Storefront() {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -90,6 +91,8 @@ export function App() {
             <Routes>
                 {/* Admin Console Route */}
                 <Route path="/admin/*" element={<AdminApp />} />
+                {/* Privacy Policy Route */}
+                <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
                 {/* 100% Identical Customer Storefront Route */}
                 <Route path="/*" element={<Storefront />} />
             </Routes>
