@@ -1,5 +1,5 @@
 // Base URL defaults to local backend or production Render URL
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://krishnajwellersbackend.onrender.com";
 
 export function getImageUrl(imagePath) {
     if (!imagePath) return "/category-ring.jpg";
