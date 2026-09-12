@@ -9,9 +9,17 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Serve static files from the dist directory
-app.use(express.static(join(__dirname, 'dist')));
+app.use(express.static(join(__dirname, 'dist'), {
+  // Don't cache index.html so routing always works
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('index.html')) {
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    }
+  }
+}));
 
-// For React Router — send all routes to index.html (SPA fallback)
+// For React Router — send ALL routes to index.html (SPA fallback)
+// This is what fixes /privacy-policy, /admin, and any direct URL access
 app.get('*', (req, res) => {
   res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
@@ -19,3 +27,4 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Krishna Jewellers website running on port ${PORT}`);
 });
+
