@@ -3,7 +3,7 @@ import { Plus, Edit2, Trash2, Search, Upload, X, ShieldCheck, Image as ImageIcon
 import { fetchJewellery, createJewellery, updateJewellery, deleteJewellery, uploadJewelleryImage } from "../services/jewelleryAdminService";
 import { fetchCategories } from "../../categories/services/categoriesAdminService";
 import { getImageUrl } from "../../../shared/services/apiClient";
-import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
+import { ImageWithFallback } from "../../../../shared/components/ImageWithFallback";
 export function JewelleryManager() {
     const [items, setItems] = useState([]);
     const [categories, setCategories] = useState([]);

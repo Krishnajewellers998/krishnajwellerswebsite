@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Plus, Edit2, Trash2, Upload, AlertCircle, CheckCircle, Image as ImageIcon } from "lucide-react";
 import { fetchCategories, createCategory, updateCategory, deleteCategory, uploadImageFile } from "../services/categoriesAdminService";
 import { getImageUrl } from "../../../shared/services/apiClient";
-import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
+import { ImageWithFallback } from "../../../../shared/components/ImageWithFallback";
 export function CategoryManager({ onCategoriesChanged }) {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
