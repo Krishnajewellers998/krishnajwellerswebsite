@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Plus, Edit2, Trash2, Upload, AlertCircle, CheckCircle, Image as ImageIcon } from "lucide-react";
 import { fetchCategories, createCategory, updateCategory, deleteCategory, uploadImageFile } from "../services/categoriesAdminService";
 import { getImageUrl } from "../../../shared/services/apiClient";
-
+import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
 export function CategoryManager({ onCategoriesChanged }) {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -15,6 +15,7 @@ export function CategoryManager({ onCategoriesChanged }) {
     const [imagePath, setImagePath] = useState("");
     const [synonyms, setSynonyms] = useState("");
     const [uploading, setUploading] = useState(false);
+    const [saving, setSaving] = useState(false);
 
     const loadData = async () => {
         try {
@@ -70,6 +71,7 @@ export function CategoryManager({ onCategoriesChanged }) {
 
     const handleSave = async (e) => {
         e.preventDefault();
+        setSaving(true);
         try {
             const parsedSynonyms = synonyms.split(",").map(s => s.trim()).filter(s => s);
             if (editingCategory) {
@@ -83,6 +85,8 @@ export function CategoryManager({ onCategoriesChanged }) {
             loadData();
         } catch (err) {
             alert(err.message || "Failed to save category");
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -130,7 +134,7 @@ export function CategoryManager({ onCategoriesChanged }) {
                         <div key={i} className="admin-category-card">
                             <div className="admin-cat-thumb">
                                 {cat.image ? (
-                                    <img src={getImageUrl(cat.image)} alt={cat.name} />
+                                    <ImageWithFallback src={getImageUrl(cat.image)} alt={cat.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 ) : (
                                     <div className="no-img-placeholder"><ImageIcon size={24} /> No Image</div>
                                 )}
@@ -196,7 +200,7 @@ export function CategoryManager({ onCategoriesChanged }) {
                                 <div className="upload-dropzone">
                                     {imagePath && (
                                         <div className="image-preview-box">
-                                            <img src={getImageUrl(imagePath)} alt="Category Preview" />
+                                            <ImageWithFallback src={getImageUrl(imagePath)} alt="Category Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                         </div>
                                     )}
                                     <input 
@@ -214,8 +218,8 @@ export function CategoryManager({ onCategoriesChanged }) {
                                 <button type="button" className="admin-secondary-btn" onClick={() => setModalOpen(false)}>
                                     Cancel
                                 </button>
-                                <button type="submit" className="admin-primary-btn" disabled={uploading}>
-                                    {editingCategory ? "Save Changes" : "Create Category"}
+                                <button type="submit" className="admin-primary-btn" disabled={uploading || saving}>
+                                    {saving ? "Saving..." : (editingCategory ? "Save Changes" : "Create Category")}
                                 </button>
                             </div>
                         </form>

@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { ArrowLeft, Scale, Sparkles, MessageCircle, ChevronLeft, ChevronRight, X, ArrowRight } from "lucide-react";
 import { useJewellery } from "../hooks/useJewellery";
 import { API_BASE_URL, getImageUrl } from "../../../shared/services/apiClient";
+import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
 
 export function CategoryProductsView({ category, searchQuery, onBack, onSearch }) {
     const { items: jewellery, loading } = useJewellery();
@@ -125,20 +126,11 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                         onClick={() => openModal(item)}
                                     >
                                         <div className="product-card-image-wrap">
-                                            {firstImg ? (
-                                                <img
-                                                    src={firstImg}
-                                                    alt={item.name || "Jewellery"}
-                                                    className="product-card-image"
-                                                    loading="lazy"
-                                                    onError={(e) => { e.target.src = "/images/category-ring.jpg"; }}
-                                                />
-                                            ) : (
-                                                <div className="product-card-no-photo">
-                                                    <Sparkles size={28} color="var(--gold)" />
-                                                    <p>No Photo</p>
-                                                </div>
-                                            )}
+                                            <ImageWithFallback
+                                                src={firstImg}
+                                                alt={item.name || "Jewellery"}
+                                                className="product-card-image"
+                                            />
                                             <div className="product-card-overlay">
                                                 <span>View Details</span>
                                             </div>
@@ -207,10 +199,10 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                             <ChevronLeft size={20} />
                                         </button>
                                     )}
-                                    <img
+                                    <ImageWithFallback
                                         id="modalImage"
                                         className="modal-main-image"
-                                        src={modalImages[activePhotoIndex] || "/images/category-ring.jpg"}
+                                        src={modalImages[activePhotoIndex]}
                                         alt={modalItem.name || "Jewellery"}
                                     />
                                     {modalImages.length > 1 && (
@@ -233,13 +225,14 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                                 {modalImages.length > 1 && (
                                     <div className="modal-thumbs" id="modalGallery">
                                         {modalImages.map((img, i) => (
-                                            <img
+                                            <div 
                                                 key={i}
-                                                src={img}
-                                                alt={`View ${i + 1}`}
-                                                className={`modal-thumb ${i === activePhotoIndex ? "active" : ""}`}
+                                                className={`modal-thumb-wrap ${i === activePhotoIndex ? "active" : ""}`}
                                                 onClick={() => setActivePhotoIndex(i)}
-                                            />
+                                                style={{ cursor: 'pointer', width: '60px', height: '60px', borderRadius: '4px', overflow: 'hidden', border: i === activePhotoIndex ? '2px solid var(--gold)' : '1px solid transparent' }}
+                                            >
+                                                <ImageWithFallback src={img} alt={`View ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                            </div>
                                         ))}
                                     </div>
                                 )}

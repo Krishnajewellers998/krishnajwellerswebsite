@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useCategories } from "../hooks/useCategories";
 import { API_BASE_URL, getImageUrl } from "../../../shared/services/apiClient";
+import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
 
 export function CategoryCollectionSection({ onSelectCategory }) {
     const { categories, loading } = useCategories();
@@ -39,12 +40,10 @@ export function CategoryCollectionSection({ onSelectCategory }) {
                             onClick={() => onSelectCategory(cat.name)}
                             style={{ cursor: "pointer" }}
                         >
-                            <img
+                            <ImageWithFallback
                                 className="category-image"
                                 src={getCategoryImage(cat)}
                                 alt={cat.name}
-                                loading="lazy"
-                                onError={(e) => { e.target.src = "/images/category-ring.jpg"; }}
                             />
                             <div className="category-info">
                                 <h3>{cat.name}</h3>

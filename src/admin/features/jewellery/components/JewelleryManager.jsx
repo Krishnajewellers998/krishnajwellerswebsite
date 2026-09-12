@@ -3,7 +3,7 @@ import { Plus, Edit2, Trash2, Search, Upload, X, ShieldCheck, Image as ImageIcon
 import { fetchJewellery, createJewellery, updateJewellery, deleteJewellery, uploadJewelleryImage } from "../services/jewelleryAdminService";
 import { fetchCategories } from "../../categories/services/categoriesAdminService";
 import { getImageUrl } from "../../../shared/services/apiClient";
-
+import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
 export function JewelleryManager() {
     const [items, setItems] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -22,6 +22,7 @@ export function JewelleryManager() {
     const [description, setDescription] = useState("");
     const [photos, setPhotos] = useState([]);
     const [uploading, setUploading] = useState(false);
+    const [saving, setSaving] = useState(false);
 
     const loadData = async () => {
         try {
@@ -87,6 +88,7 @@ export function JewelleryManager() {
 
     const handleSave = async (e) => {
         e.preventDefault();
+        setSaving(true);
         try {
             const payload = {
                 name,
@@ -109,6 +111,8 @@ export function JewelleryManager() {
             loadData();
         } catch (err) {
             alert(err.message || "Failed to save product");
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -198,7 +202,7 @@ export function JewelleryManager() {
                                         <td style={{ width: "60px" }}>
                                             <div className="table-thumb-wrap">
                                                 {thumb ? (
-                                                    <img src={getImageUrl(thumb)} alt={item.name} />
+                                                    <ImageWithFallback src={getImageUrl(thumb)} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                                 ) : (
                                                     <ImageIcon size={18} />
                                                 )}
@@ -297,7 +301,7 @@ export function JewelleryManager() {
                                 <div className="photos-preview-gallery">
                                     {photos.map((photo, i) => (
                                         <div key={i} className="photo-thumb-box">
-                                            <img src={getImageUrl(photo)} alt={`Photo ${i + 1}`} />
+                                            <ImageWithFallback src={getImageUrl(photo)} alt={`Photo ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                             <button 
                                                 type="button" 
                                                 className="remove-photo-btn"
@@ -327,8 +331,8 @@ export function JewelleryManager() {
                                 <button type="button" className="admin-secondary-btn" onClick={() => setModalOpen(false)}>
                                     Cancel
                                 </button>
-                                <button type="submit" className="admin-primary-btn" disabled={uploading}>
-                                    {editingItem ? "Save Changes" : "Publish Jewellery"}
+                                <button type="submit" className="admin-primary-btn" disabled={uploading || saving}>
+                                    {saving ? "Saving..." : (editingItem ? "Save Changes" : "Publish Jewellery")}
                                 </button>
                             </div>
                         </form>
