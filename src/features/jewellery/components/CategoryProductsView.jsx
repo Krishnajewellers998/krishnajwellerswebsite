@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { ArrowLeft, Scale, Sparkles, MessageCircle, ChevronLeft, ChevronRight, X, ArrowRight } from "lucide-react";
 import { useJewellery } from "../hooks/useJewellery";
-import { API_BASE_URL } from "../../../shared/services/apiClient";
+import { API_BASE_URL, getImageUrl } from "../../../shared/services/apiClient";
 
 export function CategoryProductsView({ category, searchQuery, onBack, onSearch }) {
     const { items: jewellery, loading } = useJewellery();
@@ -31,29 +31,22 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
 
     const getProductImage = (item) => {
         let img = "";
-        if (Array.isArray(item.images) && item.images.length > 0) {
-            img = item.images[0];
+        if (Array.isArray(item.photos) && item.photos.length > 0) {
+            img = item.photos[0];
         } else if (item.image) {
             img = item.image;
         }
-        if (!img) return "";
-        if (img.startsWith("http")) return img;
-        const clean = img.startsWith("/") ? img.slice(1) : img;
-        return `${API_BASE_URL}/${clean}`;
+        return getImageUrl(img);
     };
 
     const getItemImages = (item) => {
         let imgs = [];
-        if (Array.isArray(item.images) && item.images.length > 0) {
-            imgs = item.images;
+        if (Array.isArray(item.photos) && item.photos.length > 0) {
+            imgs = item.photos;
         } else if (item.image) {
             imgs = [item.image];
         }
-        return imgs.map(img => {
-            if (img.startsWith("http")) return img;
-            const clean = img.startsWith("/") ? img.slice(1) : img;
-            return `${API_BASE_URL}/${clean}`;
-        });
+        return imgs.map(img => getImageUrl(img));
     };
 
     const openModal = (item) => {

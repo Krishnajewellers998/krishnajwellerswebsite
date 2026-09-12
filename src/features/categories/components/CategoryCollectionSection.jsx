@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCategories } from "../hooks/useCategories";
-import { API_BASE_URL } from "../../../shared/services/apiClient";
+import { API_BASE_URL, getImageUrl } from "../../../shared/services/apiClient";
 
 export function CategoryCollectionSection({ onSelectCategory }) {
     const { categories, loading } = useCategories();
@@ -9,11 +9,7 @@ export function CategoryCollectionSection({ onSelectCategory }) {
     const displayedCategories = showAll ? categories : categories.slice(0, 6);
 
     const getCategoryImage = (cat) => {
-        const img = cat.image || "";
-        if (!img) return "/images/category-ring.jpg";
-        if (img.startsWith("http")) return img;
-        const clean = img.startsWith("/") ? img.slice(1) : img;
-        return `${API_BASE_URL}/${clean}`;
+        return getImageUrl(cat.image);
     };
 
     return (

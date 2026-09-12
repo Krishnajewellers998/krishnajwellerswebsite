@@ -14,7 +14,7 @@ export function setAdminToken(token) {
 
 export function getImageUrl(imagePath) {
     if (!imagePath) return "";
-    if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+    if (imagePath.startsWith("http://") || imagePath.startsWith("https://") || imagePath.startsWith("data:")) {
         return imagePath;
     }
     const cleanPath = imagePath.startsWith("/") ? imagePath.slice(1) : imagePath;
