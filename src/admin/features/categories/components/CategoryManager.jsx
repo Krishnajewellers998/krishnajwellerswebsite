@@ -13,6 +13,7 @@ export function CategoryManager({ onCategoriesChanged }) {
     const [editingCategory, setEditingCategory] = useState(null); // null = Add, object = Edit
     const [name, setName] = useState("");
     const [imagePath, setImagePath] = useState("");
+    const [synonyms, setSynonyms] = useState("");
     const [uploading, setUploading] = useState(false);
 
     const loadData = async () => {
@@ -36,6 +37,7 @@ export function CategoryManager({ onCategoriesChanged }) {
         setEditingCategory(null);
         setName("");
         setImagePath("");
+        setSynonyms("");
         setModalOpen(true);
     };
 
@@ -43,6 +45,7 @@ export function CategoryManager({ onCategoriesChanged }) {
         setEditingCategory(cat);
         setName(cat.name);
         setImagePath(cat.image || "");
+        setSynonyms(cat.synonyms && Array.isArray(cat.synonyms) ? cat.synonyms.join(", ") : "");
         setModalOpen(true);
     };
 
@@ -68,11 +71,12 @@ export function CategoryManager({ onCategoriesChanged }) {
     const handleSave = async (e) => {
         e.preventDefault();
         try {
+            const parsedSynonyms = synonyms.split(",").map(s => s.trim()).filter(s => s);
             if (editingCategory) {
-                await updateCategory(editingCategory.name, { name, image: imagePath });
+                await updateCategory(editingCategory.name, { name, image: imagePath, synonyms: parsedSynonyms });
                 setStatus({ type: "success", message: `Category "${name}" updated!` });
             } else {
-                await createCategory({ name, image: imagePath });
+                await createCategory({ name, image: imagePath, synonyms: parsedSynonyms });
                 setStatus({ type: "success", message: `Category "${name}" created!` });
             }
             setModalOpen(false);
@@ -133,6 +137,15 @@ export function CategoryManager({ onCategoriesChanged }) {
                             </div>
                             <div className="admin-cat-body">
                                 <h4>{cat.name}</h4>
+                                {cat.synonyms && cat.synonyms.length > 0 && (
+                                    <div className="admin-cat-synonyms" style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', margin: '6px 0' }}>
+                                        {cat.synonyms.map((syn, idx) => (
+                                            <span key={idx} style={{ background: '#333', color: '#ccc', fontSize: '11px', padding: '2px 6px', borderRadius: '4px' }}>
+                                                {syn}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                                 <div className="admin-cat-actions">
                                     <button className="action-btn edit-btn" onClick={() => openEditModal(cat)}>
                                         <Edit2 size={14} /> Edit
@@ -165,6 +178,17 @@ export function CategoryManager({ onCategoriesChanged }) {
                                     required 
                                     placeholder="e.g. Bridal Necklaces, Diamond Rings"
                                 />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Synonyms (comma separated)</label>
+                                <input 
+                                    type="text" 
+                                    value={synonyms} 
+                                    onChange={(e) => setSynonyms(e.target.value)} 
+                                    placeholder="e.g. ring, anguthi, challa"
+                                />
+                                <small style={{ color: 'var(--admin-text-muted)', fontSize: '12px', marginTop: '4px', display: 'block' }}>These keywords help users find this category via search.</small>
                             </div>
 
                             <div className="form-group">

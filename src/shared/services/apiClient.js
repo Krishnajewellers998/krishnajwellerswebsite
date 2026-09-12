@@ -3,7 +3,7 @@ export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://krishn
 
 export function getImageUrl(imagePath) {
     if (!imagePath) return "/category-ring.jpg";
-    if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
+    if (imagePath.startsWith("http://") || imagePath.startsWith("https://") || imagePath.startsWith("data:")) {
         return imagePath;
     }
     const cleanPath = imagePath.startsWith("/") ? imagePath.slice(1) : imagePath;
