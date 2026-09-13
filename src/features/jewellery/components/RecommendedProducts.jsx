@@ -13,7 +13,7 @@ export function RecommendedProducts() {
             <div className="recommended-section" style={{ marginTop: '40px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', justifyContent: 'center' }}>
                     <Sparkles size={20} color="var(--gold-dark)" />
-                    <h3 style={{ fontSize: '18px', color: 'var(--text-main)', margin: 0 }}>Recommended for You</h3>
+                    <h3 style={{ fontSize: '18px', color: '#111', margin: 0 }}>Recommended for You</h3>
                 </div>
                 <div className="products-grid">
                     {[...Array(4)].map((_, i) => (
@@ -50,7 +50,7 @@ export function RecommendedProducts() {
         <div className="recommended-section" style={{ marginTop: '50px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px', justifyContent: 'center' }}>
                 <Sparkles size={20} color="var(--gold-dark)" />
-                <h3 style={{ fontSize: '20px', color: 'var(--text-main)', margin: 0, fontFamily: 'serif' }}>Recommended for You</h3>
+                <h3 style={{ fontSize: '20px', color: '#111', margin: 0, fontFamily: 'serif' }}>Recommended for You</h3>
             </div>
             
             <div className="products-grid">
