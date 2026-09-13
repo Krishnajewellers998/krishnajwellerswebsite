@@ -5,30 +5,12 @@ import { API_BASE_URL, getImageUrl } from "../../../shared/services/apiClient";
 import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
 
 export function CategoryProductsView({ category, searchQuery, onBack, onSearch }) {
-    const { items: jewellery, loading } = useJewellery();
-    const [visibleCount, setVisibleCount] = useState(20);
+    const { items: jewellery, loading, loadingMore, hasMore, loadMore } = useJewellery({
+        category,
+        search: searchQuery
+    });
     const [modalItem, setModalItem] = useState(null);
     const [activePhotoIndex, setActivePhotoIndex] = useState(0);
-
-    // Filter products based on category or search
-    const filteredProducts = useMemo(() => {
-        let list = jewellery || [];
-
-        if (searchQuery) {
-            const query = searchQuery.trim().toLowerCase();
-            list = list.filter(item => {
-                const name = String(item.name || "").toLowerCase();
-                const cat = String(item.category || "").toLowerCase();
-                const desc = String(item.description || "").toLowerCase();
-                const syn = Array.isArray(item.synonyms) ? item.synonyms.join(" ").toLowerCase() : String(item.synonyms || "").toLowerCase();
-                return name.includes(query) || cat.includes(query) || desc.includes(query) || syn.includes(query);
-            });
-        } else if (category && category !== "All") {
-            list = list.filter(item => String(item.category || "").toLowerCase() === category.toLowerCase());
-        }
-
-        return list;
-    }, [jewellery, category, searchQuery]);
 
     const getProductImage = (item) => {
         let img = "";
@@ -86,20 +68,20 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                     <p className="products-page-count">
                         {loading
                             ? "Loading designs..."
-                            : `${filteredProducts.length} design${filteredProducts.length !== 1 ? "s" : ""} available`}
+                            : `${jewellery.length} design${jewellery.length !== 1 ? "s" : ""} available`}
                     </p>
                 </div>
             </section>
 
             {/* ── Product Grid ── */}
             <section className="products-grid-section">
-                {loading ? (
+                {loading && jewellery.length === 0 ? (
                     <div className="products-loading-state">
                         {[...Array(8)].map((_, i) => (
                             <div key={i} className="product-skeleton" />
                         ))}
                     </div>
-                ) : filteredProducts.length === 0 ? (
+                ) : jewellery.length === 0 ? (
                     <div className="products-empty-state">
                         <div className="empty-icon">
                             <Sparkles size={40} color="var(--gold)" />
@@ -117,7 +99,7 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                 ) : (
                     <>
                         <div className="products-grid" id="productsContainer">
-                            {visibleProducts.map((item, idx) => {
+                            {jewellery.map((item, idx) => {
                                 const firstImg = getProductImage(item);
                                 return (
                                     <div
@@ -157,14 +139,27 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                             })}
                         </div>
 
-                        {filteredProducts.length > visibleCount && (
-                            <div className="load-more-wrap">
+                        {hasMore && (
+                            <div className="load-more-wrap" style={{ textAlign: 'center', marginTop: '40px' }}>
                                 <button
                                     id="loadMoreBtn"
                                     className="load-more-btn"
-                                    onClick={() => setVisibleCount(prev => prev + 20)}
+                                    onClick={loadMore}
+                                    disabled={loadingMore}
+                                    style={{
+                                        padding: '12px 32px',
+                                        backgroundColor: 'var(--gold-dark)',
+                                        color: 'white',
+                                        border: 'none',
+                                        borderRadius: '30px',
+                                        cursor: loadingMore ? 'wait' : 'pointer',
+                                        fontSize: '14px',
+                                        fontWeight: 'bold',
+                                        textTransform: 'uppercase',
+                                        letterSpacing: '1px'
+                                    }}
                                 >
-                                    Load More Designs
+                                    {loadingMore ? "Loading..." : "Load More Designs"}
                                 </button>
                             </div>
                         )}

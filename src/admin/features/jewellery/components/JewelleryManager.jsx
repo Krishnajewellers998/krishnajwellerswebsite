@@ -9,6 +9,8 @@ export function JewelleryManager() {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(true);
     const [status, setStatus] = useState(null);
 
@@ -28,10 +30,11 @@ export function JewelleryManager() {
         try {
             setLoading(true);
             const [jewelleryRes, catRes] = await Promise.all([
-                fetchJewellery({ category: selectedCategory, search: searchQuery }),
+                fetchJewellery({ category: selectedCategory, search: searchQuery, page, limit: 10 }),
                 fetchCategories()
             ]);
             setItems(jewelleryRes.jewellery || []);
+            setTotalPages(jewelleryRes.totalPages || 1);
             setCategories(catRes.categories || []);
         } catch (err) {
             setStatus({ type: "error", message: err.message });
@@ -41,8 +44,12 @@ export function JewelleryManager() {
     };
 
     useEffect(() => {
-        loadData();
+        setPage(1);
     }, [selectedCategory, searchQuery]);
+
+    useEffect(() => {
+        loadData();
+    }, [selectedCategory, searchQuery, page]);
 
     const openAddModal = () => {
         setEditingItem(null);
@@ -229,6 +236,30 @@ export function JewelleryManager() {
                             })}
                         </tbody>
                     </table>
+                    
+                    {totalPages > 1 && (
+                        <div className="pagination-controls" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 20px", marginTop: "16px", borderTop: "1px solid var(--admin-border)" }}>
+                            <button 
+                                onClick={() => setPage(p => Math.max(1, p - 1))}
+                                disabled={page === 1}
+                                className="admin-secondary-btn"
+                                style={{ opacity: page === 1 ? 0.5 : 1 }}
+                            >
+                                Previous
+                            </button>
+                            <span style={{ color: "var(--admin-text-muted)", fontSize: "14px" }}>
+                                Page {page} of {totalPages}
+                            </span>
+                            <button 
+                                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                                disabled={page === totalPages}
+                                className="admin-secondary-btn"
+                                style={{ opacity: page === totalPages ? 0.5 : 1 }}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
 

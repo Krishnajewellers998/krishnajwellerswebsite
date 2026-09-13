@@ -8,7 +8,7 @@ export function JewelleryGrid({ selectedCategory, onSelectCategory, categories =
     const [searchQuery, setSearchQuery] = useState("");
     const [activeModalItem, setActiveModalItem] = useState(null);
 
-    const { items, loading, error } = useJewellery({
+    const { items, loading, loadingMore, error, hasMore, loadMore } = useJewellery({
         category: selectedCategory,
         search: searchQuery
     });
@@ -87,15 +87,39 @@ export function JewelleryGrid({ selectedCategory, onSelectCategory, categories =
                     )}
                 </div>
             ) : (
-                <div className="jewellery-grid">
-                    {items.map(item => (
-                        <JewelleryCard 
-                            key={item.id} 
-                            item={item} 
-                            onClick={setActiveModalItem}
-                        />
-                    ))}
-                </div>
+                <>
+                    <div className="jewellery-grid">
+                        {items.map(item => (
+                            <JewelleryCard 
+                                key={item.id} 
+                                item={item} 
+                                onClick={setActiveModalItem}
+                            />
+                        ))}
+                    </div>
+                    {hasMore && (
+                        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+                            <button 
+                                onClick={loadMore} 
+                                disabled={loadingMore}
+                                style={{
+                                    padding: '12px 32px',
+                                    backgroundColor: 'var(--gold-dark)',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '30px',
+                                    cursor: loadingMore ? 'wait' : 'pointer',
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '1px'
+                                }}
+                            >
+                                {loadingMore ? "Loading..." : "Load More"}
+                            </button>
+                        </div>
+                    )}
+                </>
             )}
 
             {/* Detail Modal */}
