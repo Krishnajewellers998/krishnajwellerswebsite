@@ -3,6 +3,7 @@ import { ArrowLeft, Scale, Sparkles, MessageCircle, ChevronLeft, ChevronRight, X
 import { useJewellery } from "../hooks/useJewellery";
 import { API_BASE_URL, getImageUrl } from "../../../shared/services/apiClient";
 import { ImageWithFallback } from "../../../shared/components/ImageWithFallback";
+import { RecommendedProducts } from "./RecommendedProducts";
 
 export function CategoryProductsView({ category, searchQuery, onBack, onSearch }) {
     const { items: jewellery, loading, loadingMore, hasMore, loadMore } = useJewellery({
@@ -49,7 +50,7 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
         ? `Results for "${searchQuery}"`
         : `${category} Collection`;
 
-    const visibleProducts = filteredProducts.slice(0, visibleCount);
+
 
     return (
         <div className="products-view-root">
@@ -91,10 +92,11 @@ export function CategoryProductsView({ category, searchQuery, onBack, onSearch }
                         <button 
                             className="products-back-btn" 
                             onClick={onBack}
-                            style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                            style={{ display: "inline-flex", alignItems: "center", gap: "6px", marginBottom: "40px" }}
                         >
                             <ArrowLeft size={16} /> View All Categories
                         </button>
+                        <RecommendedProducts />
                     </div>
                 ) : (
                     <>

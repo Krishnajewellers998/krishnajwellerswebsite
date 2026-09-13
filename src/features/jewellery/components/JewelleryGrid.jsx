@@ -3,6 +3,7 @@ import { Search, Sparkles, Filter } from "lucide-react";
 import { JewelleryCard } from "./JewelleryCard";
 import { JewelleryDetailModal } from "./JewelleryDetailModal";
 import { useJewellery } from "../hooks/useJewellery";
+import { RecommendedProducts } from "./RecommendedProducts";
 
 export function JewelleryGrid({ selectedCategory, onSelectCategory, categories = [] }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -81,10 +82,12 @@ export function JewelleryGrid({ selectedCategory, onSelectCategory, categories =
                         <button 
                             className="reset-btn"
                             onClick={() => { setSearchQuery(""); onSelectCategory("All"); }}
+                            style={{ marginBottom: "40px" }}
                         >
                             Reset Filters
                         </button>
                     )}
+                    <RecommendedProducts />
                 </div>
             ) : (
                 <>
